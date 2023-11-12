@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}Playground{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+       <div class="row">
+           <div class="col">
+               {{ form_start(form, { attr: { novalidate: 'novalidate' }}) }}
+               {{ form_row(form.headline) }}
+               {{ form_row(form.subheadline) }}
+               {{ form_row(form.siteIconUrl) }}
+               {{ form_row(form.siteName) }}
+               {{ form_row(form.date) }}
+               <button type="submit" class="btn btn-primary">Create</button>
+               {{ form_end(form) }}
+           </div>
+           <div class="col">
+               {% set og_image_url = url('app_generate', form_data) %}
+               <iframe width="1200" height="630" src="{{ og_image_url }}" class="shadow-sm"></iframe>
+
+               <hr>
+
+               <div class="form-group">
+                     <label for="og_image_url">Open Graph Image URL</label>
+                     <input type="text" class="form-control" id="og_image_url" value="{{ og_image_url }}" readonly>
+               </div>
+           </div>
+       </div>
+    </div>
+{% endblock %}
