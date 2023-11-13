@@ -69,26 +69,15 @@
 </head>
 <body>
     <header class="header">
-        <h1 class="headline">{{ data.headline }}</h1>
-        {% if data.subheadline %}
-            <p class="subheadline">{{ data.subheadline }}</p>
-        {% endif %}
+        <h1 class="headline">{{ page_info.title }}</h1>
+        <p class="subheadline">{{ page_info.description }}</p>
     </header>
 
-    {% if data.siteIconUrl or data.siteName %}
-        <footer class="footer">
-            {% if data.siteIconUrl %}
-                <img src="{{ data.siteIconUrl }}" width="92" height="92" class="site-icon" />
-            {% endif %}
+    <footer class="footer">
+        <img src="{{ page_info.siteIconUrl }}" width="92" height="92" class="site-icon" />
+        <span class="site-name">{{ page_info.siteName }}</span>
 
-            {% if data.siteName %}
-                <span class="site-name">{{ data.siteName }}</span>
-            {% endif %}
-
-            {% if data.date %}
-                <time class="date">{{ data.date|format_date() }}</time>
-            {% endif %}
-        </footer>
-    {% endif %}
+        <time class="date">{{ page_info.publishedAt|format_date() }}</time>
+    </footer>
 </body>
 </html>

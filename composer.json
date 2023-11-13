@@ -10,7 +10,10 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.16",
+        "friendsofphp/proxy-manager-lts": "^1.0",
         "league/flysystem-bundle": "^3.3",
+        "league/uri": "*",
+        "snc/redis-bundle": "^4.7",
         "symfony/asset": "6.4.*",
         "symfony/asset-mapper": "6.4.*",
         "symfony/console": "6.4.*",
@@ -18,6 +21,7 @@
         "symfony/flex": "^2",
         "symfony/form": "6.4.*",
         "symfony/framework-bundle": "6.4.*",
+        "symfony/http-client": "6.4.*",
         "symfony/panther": "^2.1",
         "symfony/runtime": "6.4.*",
         "symfony/twig-bundle": "6.4.*",
@@ -79,7 +83,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "6.4.*",
             "docker": true
         }

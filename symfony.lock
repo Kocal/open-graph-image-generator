@@ -39,6 +39,18 @@
             "var/storage/.gitignore"
         ]
     },
+    "snc/redis-bundle": {
+        "version": "4.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "36b3d9ab65be62de4e085a25e6ca899efa96b1f3"
+        },
+        "files": [
+            "config/packages/snc_redis.yaml"
+        ]
+    },
     "symfony/asset-mapper": {
         "version": "6.4",
         "recipe": {
