@@ -1,7 +1,8 @@
 # Read the documentation at https://github.com/thephpleague/flysystem-bundle/blob/master/docs/1-getting-started.md
 flysystem:
     storages:
-        default.storage:
+        og_image.storage:
             adapter: 'local'
             options:
-                directory: '%kernel.project_dir%/var/storage/default'
+                directory: '%kernel.project_dir%/var/storage/og_images'
+            public_url: '/og_images'

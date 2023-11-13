@@ -69,7 +69,8 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "importmap:install": "symfony-cmd",
-            "vendor/bin/bdi detect var/drivers": "php-script"
+            "vendor/bin/bdi detect var/drivers": "php-script",
+            "ln -s \"$PWD/var/storage/og_images\" %PUBLIC_DIR%/og_images": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"

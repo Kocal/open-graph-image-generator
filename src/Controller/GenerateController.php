@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Form\Request\GenerateOpenGraphImageRequest;
 use App\Form\Type\GenerateOpenGraphImageType;
 use App\Handler\GetPageInfo;
+use App\Handler\GetPageScreenshotUrl;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class GenerateController extends AbstractController
 {
@@ -17,7 +20,15 @@ class GenerateController extends AbstractController
     public function __invoke(
         Request $request,
         GetPageInfo $getPageInfo,
-        #[Autowire(param: 'kernel.debug')] $debug,
+        GetPageScreenshotUrl $getPageScreenshotUrl,
+        #[Autowire(param: 'kernel.debug')]
+        bool $debug,
+
+        #[Autowire(param: 'app.open_graph_image.width')]
+        int $openGraphImageWidth,
+
+        #[Autowire(param: 'app.open_graph_image.height')]
+        int $openGraphImageHeight,
     ): Response
     {
         $form = $this->createForm(GenerateOpenGraphImageType::class, $data = new GenerateOpenGraphImageRequest());
@@ -37,8 +48,24 @@ class GenerateController extends AbstractController
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->render('generate/image.html.twig', [
-            'page_info' => $pageInfo,
-        ]);
+        if ($data->format === 'html') {
+            return $this->render('generate/image.html.twig', [
+                'page_info' => $pageInfo,
+                'width' => $openGraphImageWidth,
+                'height' => $openGraphImageHeight,
+            ]);
+        }
+
+        $pageScreenshotUrl = ($getPageScreenshotUrl)(
+            $this->generateUrl(
+                $request->attributes->get('_route'),
+                $request->query->all() + ['format' => 'html'],
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ),
+            $openGraphImageWidth,
+            $openGraphImageHeight
+        );
+
+        return new RedirectResponse($pageScreenshotUrl);
     }
 }

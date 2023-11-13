@@ -9,18 +9,19 @@
            <div class="col">
                {{ form_start(form, { attr: { novalidate: 'novalidate' }}) }}
                    {{ form_row(form.url) }}
+                   {{ form_row(form.format) }}
                    <button type="submit" class="btn btn-primary">Create</button>
                {{ form_end(form) }}
            </div>
            <div class="col">
-               {% set og_image_url = url('app_generate', open_graph_image_request) %}
-               <iframe width="1200" height="630" src="{{ og_image_url }}" class="shadow-sm"></iframe>
+               {% set open_graph_image_url = url('app_generate', open_graph_image_request) %}
+               <iframe width="{{ open_graph_image_width }}" height="{{ open_graph_image_height }}" src="{{ open_graph_image_url }}" class="shadow-sm"></iframe>
 
                <hr>
 
                <div class="form-group">
-                     <label for="og_image_url">Open Graph Image URL</label>
-                     <input type="text" class="form-control" id="og_image_url" value="{{ og_image_url }}" readonly>
+                     <label for="open_graph_image_url">Open Graph Image URL (preview) </label>
+                     <input type="text" class="form-control" id="open_graph_image_url" value="{{ open_graph_image_url }}" readonly>
                </div>
            </div>
        </div>

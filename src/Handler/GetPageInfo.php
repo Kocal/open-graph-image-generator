@@ -3,11 +3,10 @@
 namespace App\Handler;
 
 use App\Dto\PageInfo;
+use App\Panther;
 use Facebook\WebDriver\WebDriverBy;
 use League\Uri\Uri;
-use League\Url\Url;
 use Psr\Cache\CacheItemInterface;
-use Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Panther\Client;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -21,6 +20,7 @@ final readonly class GetPageInfo
         #[Autowire(env: 'csv:APP_OPENGRAPH_IMAGE_GENERATION_ALLOWED_DOMAINS')]
         private array $allowedDomains,
         private CacheInterface $cache,
+        private Panther $panther,
     ) {
     }
 
@@ -54,7 +54,7 @@ final readonly class GetPageInfo
      */
     private function doInvoke(string $pageUrl): array
     {
-        $client = Client::createFirefoxClient();
+        $client = $this->panther->getClient();
         $client->request('GET', $pageUrl);
 
         $title = $client
@@ -81,13 +81,17 @@ final readonly class GetPageInfo
             }
         }
 
-        return [
-            'url' => $pageUrl,
-            'title' => $title,
-            'description' => $description,
-            'siteIconUrl' => $siteIconUrl->toString(),
-            'siteName' => Uri::new($pageUrl)->getHost(),
-            'datePublished' => $datePublished,
-        ];
+        try {
+            return [
+                'url' => $pageUrl,
+                'title' => $title,
+                'description' => $description,
+                'siteIconUrl' => $siteIconUrl->toString(),
+                'siteName' => Uri::new($pageUrl)->getHost(),
+                'datePublished' => $datePublished,
+            ];
+        } finally {
+            $client->quit();
+        }
     }
 }

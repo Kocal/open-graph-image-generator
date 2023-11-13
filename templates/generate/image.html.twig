@@ -17,8 +17,6 @@
         }
 
         html, body {
-            width: 1200px;
-            height: 630px;
             overflow: hidden;
         }
 
@@ -26,7 +24,7 @@
             padding: 3em;
             display: flex;
             flex-direction: column;
-            background-color: #003B6F;
+            background-color: #0a5293;
             color: rgba(255, 255, 255, 0.85);
         }
 
@@ -40,12 +38,12 @@
         }
 
         .headline {
-            font-size: 48px;
+            font-size: 52px;
         }
 
         .subheadline {
             margin-top: 1em;
-            font-size: 36px;
+            font-size: 40px;
             color: rgba(255, 255, 255, 0.75);
         }
 
@@ -67,7 +65,7 @@
 
     </style>
 </head>
-<body>
+<body style="width: {{ width }}px; height: {{ height }}px">
     <header class="header">
         <h1 class="headline">{{ page_info.title }}</h1>
         <p class="subheadline">{{ page_info.description }}</p>

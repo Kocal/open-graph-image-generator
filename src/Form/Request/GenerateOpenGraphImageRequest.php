@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Form\Request;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class GenerateOpenGraphImageRequest
@@ -9,24 +10,15 @@ final class GenerateOpenGraphImageRequest
     #[Assert\Url]
     public string|null $url = null;
 
-    public string|null $headline = null;
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: ['image', 'html'])]
+    public string $format = 'image';
 
-    public string|null $subheadline = null;
-
-    public string|null $siteIconUrl = null;
-
-    public string|null $siteName = null;
-
-    public \DateTimeInterface|null $date = null;
-
-    public function toArray() {
+    public function toArray(): array
+    {
         return [
             'url' => $this->url,
-            'headline' => $this->headline,
-            'subheadline' => $this->subheadline,
-            'siteIconUrl' => $this->siteIconUrl,
-            'siteName' => $this->siteName,
-            'date' => $this->date?->format(DATE_ATOM),
+            'format' => $this->format,
         ];
     }
 }

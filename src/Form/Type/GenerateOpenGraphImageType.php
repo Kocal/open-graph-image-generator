@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Form\Request\GenerateOpenGraphImageRequest;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,6 +20,14 @@ final  class GenerateOpenGraphImageType extends AbstractType
             ->add('url', TextType::class, [
                 'label' => 'Page URL',
                 'required' => false,
+            ])
+            ->add('format', ChoiceType::class, [
+                'label' => 'Format',
+                'empty_data' => 'image',
+                'choices' => [
+                    'Image' => 'image',
+                    'HTML' => 'html',
+                ],
             ])
         ;
     }
