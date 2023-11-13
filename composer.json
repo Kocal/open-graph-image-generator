@@ -7,9 +7,6 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/doctrine-bundle": "^2.11",
-        "doctrine/doctrine-migrations-bundle": "^3.2",
-        "doctrine/orm": "^2.16",
         "friendsofphp/proxy-manager-lts": "^1.0",
         "league/flysystem-bundle": "^3.3",
         "league/uri": "*",
@@ -70,7 +67,7 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "importmap:install": "symfony-cmd",
             "vendor/bin/bdi detect var/drivers": "php-script",
-            "ln -s \"$PWD/var/storage/og_images\" %PUBLIC_DIR%/og_images": "script"
+            "ln -sf \"$PWD/var/storage/og_images\" %PUBLIC_DIR%/.": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
