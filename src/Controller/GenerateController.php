@@ -64,6 +64,8 @@ class GenerateController extends AbstractController
             $openGraphImageHeight
         );
 
-        return new RedirectResponse($pageScreenshotUrl);
+        return (new RedirectResponse($pageScreenshotUrl))
+            ->setPublic()
+            ->setMaxAge(3600);
     }
 }
