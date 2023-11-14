@@ -23,10 +23,8 @@ class GenerateController extends AbstractController
         GetPageScreenshotUrl $getPageScreenshotUrl,
         #[Autowire(param: 'kernel.debug')]
         bool $debug,
-
         #[Autowire(param: 'app.open_graph_image.width')]
         int $openGraphImageWidth,
-
         #[Autowire(param: 'app.open_graph_image.height')]
         int $openGraphImageHeight,
     ): Response
@@ -59,7 +57,7 @@ class GenerateController extends AbstractController
         $pageScreenshotUrl = ($getPageScreenshotUrl)(
             $this->generateUrl(
                 $request->attributes->get('_route'),
-                $request->query->all() + ['format' => 'html'],
+                ['format' => 'html'] + $request->query->all(),
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
             $openGraphImageWidth,

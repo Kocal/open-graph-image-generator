@@ -13,3 +13,7 @@
 /public/assets/
 /assets/vendor
 ###< symfony/asset-mapper ###
+
+###> symfony/panther ###
+/drivers
+###< symfony/panther ###

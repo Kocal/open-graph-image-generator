@@ -7,9 +7,9 @@ use Symfony\Component\Panther\Client;
 
 final readonly class Panther
 {
-    private Client $client;
-
     public function __construct(
+        #[Autowire(env: 'resolve:PANTHER_CHROME_DRIVER')]
+        private string $chromeDriverBinary,
         #[Autowire(param: 'kernel.debug')]
         private bool $debug,
     ) {
@@ -17,8 +17,7 @@ final readonly class Panther
 
     public function getClient(): Client
     {
-        return Client::createChromeClient(null, null, [
-            'port' => 9516,
+        return Client::createChromeClient($this->chromeDriverBinary, null, [
             'capabilities' => ['acceptInsecureCerts' => $this->debug]
         ]);
     }
