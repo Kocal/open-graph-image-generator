@@ -4,6 +4,8 @@ namespace App\Handler;
 
 use App\Panther;
 use Facebook\WebDriver\WebDriverDimension;
+use Imagine\Image\Box;
+use Imagine\Imagick\Imagine;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\DependencyInjection\Attribute\Target;
 
@@ -22,16 +24,25 @@ final readonly class GetPageScreenshotUrl
         string $height,
     ): string
     {
-        $imageName = sprintf('%s_%s_%s.png', hash('xxh128', $pageUrl), $width, $height);
+        $imageFormat = 'webp';
+        $imageName = sprintf('%s_%s_%s.%s', hash('xxh128', $pageUrl), $width, $height, $imageFormat);
 
         if (!$this->filesystemOperator->fileExists($imageName)) {
-            $this->filesystemOperator->write($imageName, $this->doInvoke($pageUrl, $width, $height));
+            $this->filesystemOperator->write($imageName, $this->doInvoke($pageUrl, $imageFormat, $width, $height));
         }
 
         return $this->filesystemOperator->publicUrl($imageName);
     }
 
-    private function doInvoke(string $pageUrl, int $width, int $height): string
+    private function doInvoke(string $pageUrl, string $imageFormat, int $width, int $height): string
+    {
+        $screenshot = $this->takeScreenshot($pageUrl, $width, $height);
+        $screenshot = $this->optimizeScreenshot($screenshot,  $imageFormat,$width, $height);
+
+        return $screenshot;
+    }
+
+    private function takeScreenshot(string $pageUrl, int $width, int $height): string
     {
         $client = $this->panther->getClient();
         $client->manage()->window()->setSize(new WebDriverDimension($width, $height));
@@ -42,5 +53,14 @@ final readonly class GetPageScreenshotUrl
         } finally {
             $client->quit();
         }
+    }
+
+    private function optimizeScreenshot(string $imageContent, string $imageFormat, int $width, int $height): string
+    {
+        $imagine = new Imagine();
+        $image = $imagine->load($imageContent);
+        $image->resize(new Box($width, $height));
+
+        return $image->get($imageFormat);
     }
 }
