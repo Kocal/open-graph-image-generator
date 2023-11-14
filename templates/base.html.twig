@@ -16,8 +16,19 @@
     <body>
         {% block body %}
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <div class="container">
-                    <a class="navbar-brand" href="{{ path('app_home') }}">OpenGraph Image Generator</a>
+                <div class="container d-flex">
+                    <div>
+                        <a class="navbar-brand" href="{{ path('app_home') }}">OpenGraph Image Generator</a>
+                    </div>
+
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a href="https://github.com/Kocal/open-graph-image-generator" class="nav-link link-light">GitHub</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://twitter.com/HugoAlliaume" class="nav-link link-light">X (Twitter)</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
 
