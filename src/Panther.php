@@ -8,17 +8,22 @@ use Symfony\Component\Panther\Client;
 final readonly class Panther
 {
     public function __construct(
-        #[Autowire(env: 'resolve:PANTHER_CHROME_DRIVER')]
-        private string $chromeDriverBinary,
+        #[Autowire(env: 'resolve:PANTHER_FIREFOX_DRIVER')]
+        private string $firefoxDriverBinary,
         #[Autowire(param: 'kernel.debug')]
         private bool $debug,
     ) {
     }
 
-    public function getClient(): Client
+    public function getClient(array|null $arguments = null, array $options = []): Client
     {
-        return Client::createChromeClient($this->chromeDriverBinary, null, [
-            'capabilities' => ['acceptInsecureCerts' => $this->debug]
-        ]);
+        return Client::createFirefoxClient(
+            $this->firefoxDriverBinary,
+            $arguments === null ? null : ['--headless', ...$arguments],
+            array_merge_recursive(
+                ['capabilities' => ['acceptInsecureCerts' => $this->debug]],
+                $options
+            )
+        );
     }
 }

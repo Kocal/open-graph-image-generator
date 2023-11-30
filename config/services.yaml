@@ -6,6 +6,7 @@
 parameters:
     app.open_graph_image.width: 1200
     app.open_graph_image.height: 630
+    app.open_graph_image.background_color: '#0a5293'
 
 services:
     # default configuration for services in *this* file

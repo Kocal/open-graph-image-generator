@@ -1,10 +1,10 @@
 # Open Graph Image Generator
 
+This project is a simple Open Graph image generator, it allows you to generate Open Graph images for a given URL.
+
 ## Requirements
 
-- PHP
-- Symfony CLI
-- Docker
+- [DDEV](https://ddev.com/)
 
 ## Installation
 
@@ -17,8 +17,8 @@ $ git clone https://github.com/Kocal/open-graph-image-generator.git
 
 3. Run the following commands:
 ```shell
-$ docker compose up -d
-$ symfony composer install
+$ ddev start
+$ ddev composer install
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ $ symfony composer install
 Run the project:
 
 ```shell
-$ symfony serve
+$ ddev start
 ```
 
 ## Programmatic usage
@@ -35,4 +35,4 @@ You can use this project programmatically by sending a `GET` request to the `/ge
 - `format` (required): The image format, can be `html` or `image`
 - `url` (required): The URL to generate the Open Graph image
 
-Example: https://127.0.0.1:8000/generate?url=https://hugo.alliau.me/posts/2023-10-21-blackfire-and-symfony-cli.html&format=image
+Example: https://og-image-generator.ddev.site/generate?url=https://hugo.alliau.me/posts/2023-10-21-blackfire-and-symfony-cli.html&format=image
