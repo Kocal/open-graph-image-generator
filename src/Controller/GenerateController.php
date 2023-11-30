@@ -29,12 +29,11 @@ class GenerateController extends AbstractController
         int $openGraphImageHeight,
         #[Autowire(param: 'app.open_graph_image.background_color')]
         string $openGraphImageBackgroundColor,
-    ): Response
-    {
+    ): Response {
         $form = $this->createForm(GenerateOpenGraphImageType::class, $data = new GenerateOpenGraphImageRequest());
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && !$form->isValid()) {
+        if ($form->isSubmitted() && ! $form->isValid()) {
             return new Response('Invalid form', Response::HTTP_BAD_REQUEST);
         }
 
@@ -53,14 +52,16 @@ class GenerateController extends AbstractController
                 'page_info' => $pageInfo,
                 'width' => $openGraphImageWidth,
                 'height' => $openGraphImageHeight,
-                'background_color' => $openGraphImageBackgroundColor
+                'background_color' => $openGraphImageBackgroundColor,
             ]);
         }
 
         $pageScreenshotUrl = ($getPageScreenshotUrl)(
             $this->generateUrl(
                 $request->attributes->get('_route'),
-                ['format' => 'html'] + $request->query->all(),
+                [
+                    'format' => 'html',
+                ] + $request->query->all(),
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
             $openGraphImageWidth,

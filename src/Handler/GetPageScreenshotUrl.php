@@ -25,12 +25,11 @@ final readonly class GetPageScreenshotUrl
         string $width,
         string $height,
         string $backgroundColor,
-    ): string
-    {
+    ): string {
         $imageFormat = 'webp';
         $imageName = sprintf('%s_%s_%s.%s', hash('xxh128', $pageUrl), $width, $height, $imageFormat);
 
-        if (!$this->filesystemOperator->fileExists($imageName)) {
+        if (! $this->filesystemOperator->fileExists($imageName)) {
             $this->filesystemOperator->write($imageName, $this->doInvoke($pageUrl, $imageFormat, $width, $height, $backgroundColor));
         }
 
@@ -51,7 +50,7 @@ final readonly class GetPageScreenshotUrl
             // we need to create an image with the desired dimensions and background color
             $image = $imagine->create(
                 new Box($width, $height),
-                (new RGB)->color($backgroundColor)
+                (new RGB())->color($backgroundColor)
             );
 
             // FIXME: Since Firefox does not respect the window dimensions,

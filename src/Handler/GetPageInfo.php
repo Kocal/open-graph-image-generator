@@ -8,7 +8,6 @@ use Facebook\WebDriver\WebDriverBy;
 use League\Uri\Uri;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\Panther\Client;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -27,13 +26,13 @@ final readonly class GetPageInfo
     public function __invoke(string $pageUrl): PageInfo
     {
         $domain = Uri::new($pageUrl)->getHost();
-        if (!in_array($domain, $this->allowedDomains)) {
+        if (! in_array($domain, $this->allowedDomains)) {
             throw new \InvalidArgumentException('Invalid domain.');
         }
 
         $pageInfo = $this->cache->get(
             key: hash('xxh128', $pageUrl),
-            callback: function(CacheItemInterface $cacheItem) use ($pageUrl) {
+            callback: function (CacheItemInterface $cacheItem) use ($pageUrl) {
                 $cacheItem->expiresAfter(60 * 60 * 24 * 7);
                 return $this->doInvoke($pageUrl);
             },

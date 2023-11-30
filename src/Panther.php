@@ -21,7 +21,11 @@ final readonly class Panther
             $this->firefoxDriverBinary,
             $arguments === null ? null : ['--headless', ...$arguments],
             array_merge_recursive(
-                ['capabilities' => ['acceptInsecureCerts' => $this->debug]],
+                [
+                    'capabilities' => [
+                        'acceptInsecureCerts' => $this->debug,
+                    ],
+                ],
                 $options
             )
         );

@@ -15,10 +15,11 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function __invoke(
         Request $request,
-        #[Autowire(param: 'app.open_graph_image.width')] int $openGraphImageWidth,
-        #[Autowire(param: 'app.open_graph_image.height')] int $openGraphImageHeight,
-    ): Response
-    {
+        #[Autowire(param: 'app.open_graph_image.width')]
+        int $openGraphImageWidth,
+        #[Autowire(param: 'app.open_graph_image.height')]
+        int $openGraphImageHeight,
+    ): Response {
         $form = $this->createForm(GenerateOpenGraphImageType::class, $data = new GenerateOpenGraphImageRequest());
 
         $form->handleRequest($request);
