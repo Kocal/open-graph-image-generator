@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app.request.locale }}">
+<html lang="{{ app.request.locale }}" style="width: {{ width }}px; height: {{ height }}px">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
@@ -21,10 +21,11 @@
         }
 
         body {
+            width: 100%;
+            height: 100%;
             padding: 3em;
             display: flex;
             flex-direction: column;
-            background-color: #0a5293;
             color: rgba(255, 255, 255, 0.85);
         }
 
@@ -65,7 +66,7 @@
 
     </style>
 </head>
-<body style="width: {{ width }}px; height: {{ height }}px">
+<body style="background-color: {{ background_color }}">
     <header class="header">
         <h1 class="headline">{{ page_info.title }}</h1>
         <p class="subheadline">{{ page_info.description }}</p>

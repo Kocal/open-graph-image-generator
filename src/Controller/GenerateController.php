@@ -27,6 +27,8 @@ class GenerateController extends AbstractController
         int $openGraphImageWidth,
         #[Autowire(param: 'app.open_graph_image.height')]
         int $openGraphImageHeight,
+        #[Autowire(param: 'app.open_graph_image.background_color')]
+        string $openGraphImageBackgroundColor,
     ): Response
     {
         $form = $this->createForm(GenerateOpenGraphImageType::class, $data = new GenerateOpenGraphImageRequest());
@@ -51,6 +53,7 @@ class GenerateController extends AbstractController
                 'page_info' => $pageInfo,
                 'width' => $openGraphImageWidth,
                 'height' => $openGraphImageHeight,
+                'background_color' => $openGraphImageBackgroundColor
             ]);
         }
 
@@ -61,7 +64,8 @@ class GenerateController extends AbstractController
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
             $openGraphImageWidth,
-            $openGraphImageHeight
+            $openGraphImageHeight,
+            $openGraphImageBackgroundColor
         );
 
         return (new RedirectResponse($pageScreenshotUrl))
