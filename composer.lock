@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1a9f234c8cefcde491d66f2238a440c",
+    "content-hash": "85bd8f14f0cc25304d2f50047ba75d4b",
     "packages": [
         {
             "name": "composer/semver",
@@ -5587,6 +5587,64 @@
                 }
             ],
             "time": "2023-11-07T14:57:07+00:00"
+        },
+        {
+            "name": "symplify/easy-coding-standard",
+            "version": "12.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/easy-coding-standard/easy-coding-standard.git",
+                "reference": "24b7b28c25d698e64496c4d19c798ccd01617c7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/easy-coding-standard/easy-coding-standard/zipball/24b7b28c25d698e64496c4d19c798ccd01617c7d",
+                "reference": "24b7b28c25d698e64496c4d19c798ccd01617c7d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "conflict": {
+                "friendsofphp/php-cs-fixer": "<3.0",
+                "squizlabs/php_codesniffer": "<3.6",
+                "symplify/coding-standard": "<11.3"
+            },
+            "bin": [
+                "bin/ecs"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer",
+            "keywords": [
+                "Code style",
+                "automation",
+                "fixer",
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/easy-coding-standard/easy-coding-standard/issues",
+                "source": "https://github.com/easy-coding-standard/easy-coding-standard/tree/12.0.9"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/rectorphp",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-11-29T09:35:09+00:00"
         }
     ],
     "aliases": [],
