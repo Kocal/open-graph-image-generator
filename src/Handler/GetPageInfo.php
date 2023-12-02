@@ -9,7 +9,6 @@ use League\Uri\Uri;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final readonly class GetPageInfo
 {
