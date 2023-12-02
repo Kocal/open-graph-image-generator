@@ -25,10 +25,10 @@ jobs:
         uses: ddev/github-action-setup-ddev@v1
 
       - name: Install PHP dependencies
-        run: ddev composer install
+        run: ddev composer install --no-ansi
 
       - name: Check code style
-        run: ddev composer check-cs
+        run: ddev composer check-cs -- --no-ansi
 
       - name: Analyze source code
-        run: ddev composer phpstan
+        run: ddev composer phpstan -- --no-ansi
