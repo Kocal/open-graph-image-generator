@@ -31,10 +31,12 @@
     },
     "require-dev": {
         "dbrekelmans/bdi": "^1.1",
+        "phpstan/phpstan": "^1.10",
         "symfony/maker-bundle": "^1.51",
         "symfony/stopwatch": "6.4.*",
         "symfony/web-profiler-bundle": "6.4.*",
-        "symplify/easy-coding-standard": "^12.0"
+        "symplify/easy-coding-standard": "^12.0",
+        "symplify/phpstan-rules": "^12.4"
     },
     "config": {
         "allow-plugins": {
@@ -79,7 +81,8 @@
             "@auto-scripts"
         ],
         "check-cs": "vendor/bin/ecs check --ansi",
-        "fix-cs": "vendor/bin/ecs check --ansi"
+        "fix-cs": "vendor/bin/ecs check --ansi",
+        "phpstan": "vendor/bin/phpstan analyse --ansi"
     },
     "conflict": {
         "symfony/symfony": "*"
