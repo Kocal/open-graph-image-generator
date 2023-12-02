@@ -4,7 +4,7 @@
     "minimum-stability": "beta",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": "~8.3.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "friendsofphp/proxy-manager-lts": "^1.0",
