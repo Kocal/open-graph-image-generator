@@ -1,0 +1,19 @@
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup DDEV
+        uses: ddev/github-action-setup-ddev@v1
+
+      - name: Install PHP dependencies
+        run: ddev composer install
+
+      - name: Check code style
+        run: ddev composer check-cs
+
+      - name: Analyze source code
+        run: ddev composer phpstan
