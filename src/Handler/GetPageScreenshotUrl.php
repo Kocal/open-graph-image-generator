@@ -22,8 +22,8 @@ final readonly class GetPageScreenshotUrl
 
     public function __invoke(
         string $pageUrl,
-        string $width,
-        string $height,
+        int $width,
+        int $height,
         string $backgroundColor,
     ): string {
         $imageFormat = 'webp';

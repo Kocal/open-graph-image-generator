@@ -13,8 +13,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final readonly class GetPageInfo
 {
-    private HttpClientInterface $httpClient;
-
+    /**
+     * @param list<string> $allowedDomains
+     */
     public function __construct(
         #[Autowire(env: 'csv:APP_OPENGRAPH_IMAGE_GENERATION_ALLOWED_DOMAINS')]
         private array $allowedDomains,
@@ -58,23 +59,26 @@ final readonly class GetPageInfo
 
         $title = $client
             ->findElement(WebDriverBy::cssSelector('meta[property="og:title"]'))
-            ->getAttribute('content');
+            ->getAttribute('content')
+        ?? throw new \RuntimeException('Title not found.');
 
         $description = $client
             ->findElement(WebDriverBy::cssSelector('meta[property="og:description"]'))
-            ->getAttribute('content');
+            ->getAttribute('content')
+        ?? throw new \RuntimeException('Description not found.');
 
         $siteIconUrl = Uri::fromBaseUri(
             uri: $client
                 ->findElement(WebDriverBy::cssSelector('link[rel="apple-touch-icon"]'))
-                ->getAttribute('href'),
+                ->getAttribute('href')
+            ?? throw new \RuntimeException('Site icon not found.'),
             baseUri: $pageUrl,
         );
 
         $datePublished = null;
         foreach ($client->findElements(WebDriverBy::cssSelector('script[type="application/ld+json"]')) as $element) {
             $jsonLd = json_decode($element->getDomProperty('textContent'), true, flags: JSON_THROW_ON_ERROR);
-            if (null !== ($jsonLd['datePublished'] ?? null)) {
+            if (is_array($jsonLd) && is_string($jsonLd['datePublished'] ?? null)) {
                 $datePublished = new \DateTimeImmutable($jsonLd['datePublished']);
                 break;
             }
@@ -86,7 +90,7 @@ final readonly class GetPageInfo
                 'title' => $title,
                 'description' => $description,
                 'siteIconUrl' => $siteIconUrl->toString(),
-                'siteName' => Uri::new($pageUrl)->getHost(),
+                'siteName' => Uri::new($pageUrl)->getHost() ?? throw new \RuntimeException('Site name not found.'),
                 'datePublished' => $datePublished,
             ];
         } finally {

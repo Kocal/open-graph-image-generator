@@ -14,7 +14,7 @@ final readonly class PageInfo
         #[Assert\NotBlank]
         public string $description,
         #[Assert\Date]
-        public \DateTimeInterface $publishedAt,
+        public \DateTimeInterface|null $publishedAt,
         #[Assert\Url]
         public string $siteIconUrl,
         #[Assert\NotBlank]

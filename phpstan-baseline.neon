@@ -1,0 +1,21 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$pageUrl of callable App\\\\Handler\\\\GetPageInfo expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Controller/GenerateController.php
+
+		-
+			message: "#^Parameter \\#1 \\$route of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Controller\\\\AbstractController\\:\\:generateUrl\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Controller/GenerateController.php
+
+		-
+			message: "#^Method App\\\\Form\\\\Request\\\\GenerateOpenGraphImageRequest\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Form/Request/GenerateOpenGraphImageRequest.php
+
+		-
+			message: "#^Call to an undefined method Facebook\\\\WebDriver\\\\WebDriverElement\\:\\:getDomProperty\\(\\)\\.$#"
+			count: 1
+			path: src/Handler/GetPageInfo.php

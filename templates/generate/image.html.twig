@@ -76,7 +76,9 @@
         <img src="{{ page_info.siteIconUrl }}" width="92" height="92" class="site-icon" />
         <span class="site-name">{{ page_info.siteName }}</span>
 
-        <time class="date">{{ page_info.publishedAt|format_date() }}</time>
+        {% if page_info.publishedAt %}
+            <time class="date">{{ page_info.publishedAt|format_date() }}</time>
+        {% endif %}
     </footer>
 </body>
 </html>

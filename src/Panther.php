@@ -15,6 +15,10 @@ final readonly class Panther
     ) {
     }
 
+    /**
+     * @param list<string>|null $arguments
+     * @param array<string, mixed> $options
+     */
     public function getClient(array|null $arguments = null, array $options = []): Client
     {
         return Client::createFirefoxClient(
