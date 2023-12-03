@@ -6,7 +6,7 @@
 {% block main %}
     <div class="container-fluid">
        <div class="row">
-           <div class="col">
+           <div class="col-4">
                {{ form_start(form, { attr: { novalidate: 'novalidate' }}) }}
                    {{ form_row(form.url) }}
                    {{ form_row(form.format) }}
@@ -14,14 +14,13 @@
                {{ form_end(form) }}
            </div>
            <div class="col">
-               {% set open_graph_image_url = url('app_generate', open_graph_image_request) %}
-               <iframe width="{{ open_graph_image_width }}" height="{{ open_graph_image_height }}" src="{{ open_graph_image_url }}" class="shadow-sm"></iframe>
+               <iframe width="100%" style="aspect-ratio: 1200 / 630" src="{{ image_url }}" class="shadow-sm"></iframe>
 
                <hr>
 
                <div class="form-group">
-                     <label for="open_graph_image_url">Open Graph Image URL (preview) </label>
-                     <input type="text" class="form-control" id="open_graph_image_url" value="{{ open_graph_image_url }}" readonly>
+                     <label for="image_url">Open Graph Image URL (preview) </label>
+                     <input type="text" class="form-control" id="image_url" value="{{ image_url }}" readonly>
                </div>
            </div>
        </div>
