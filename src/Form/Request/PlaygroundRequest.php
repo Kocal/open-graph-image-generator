@@ -4,7 +4,7 @@ namespace App\Form\Request;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class GenerateOpenGraphImageRequest
+final class PlaygroundRequest
 {
     #[Assert\NotBlank]
     #[Assert\Url]
@@ -14,11 +14,14 @@ final class GenerateOpenGraphImageRequest
     #[Assert\Choice(choices: ['image', 'html'])]
     public string $format = 'image';
 
+    /**
+     * @return array{url: string|null, _format: string}
+     */
     public function toArray(): array
     {
         return [
             'url' => $this->url,
-            'format' => $this->format,
+            '_format' => $this->format,
         ];
     }
 }
