@@ -2,36 +2,26 @@
 
 namespace App;
 
+use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Panther\Client;
 
 final readonly class Panther
 {
     public function __construct(
-        #[Autowire(env: 'resolve:PANTHER_FIREFOX_DRIVER')]
-        private string $firefoxDriverBinary,
+        #[Autowire(env: 'resolve:PANTHER_SELENIUM_URL')]
+        private string $seleniumUrl,
         #[Autowire(param: 'kernel.debug')]
-        private bool $debug,
+        private bool   $debug,
     ) {
     }
 
-    /**
-     * @param list<string>|null $arguments
-     * @param array<string, mixed> $options
-     */
-    public function getClient(array|null $arguments = null, array $options = []): Client
+    public function getClient(): Client
     {
-        return Client::createFirefoxClient(
-            $this->firefoxDriverBinary,
-            $arguments === null ? null : ['--headless', ...$arguments],
-            array_merge_recursive(
-                [
-                    'capabilities' => [
-                        'acceptInsecureCerts' => $this->debug,
-                    ],
-                ],
-                $options
-            )
+        return Client::createSeleniumClient(
+            $this->seleniumUrl,
+            DesiredCapabilities::chrome()
+                ->setCapability('acceptInsecureCerts', $this->debug),
         );
     }
 }

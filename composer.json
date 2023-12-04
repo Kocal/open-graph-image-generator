@@ -35,7 +35,6 @@
         "twig/twig": "^2.12|^3.8"
     },
     "require-dev": {
-        "dbrekelmans/bdi": "^1.1",
         "phpstan/phpstan": "^1.10.47",
         "symfony/maker-bundle": "^1.52",
         "symfony/stopwatch": "7.0.*",
@@ -75,7 +74,6 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "importmap:install": "symfony-cmd",
-            "vendor/bin/bdi detect drivers": "php-script",
             "mkdir -p \"$PWD/var/storage/og_images\"": "script",
             "ln -sf \"$PWD/var/storage/og_images\" %PUBLIC_DIR%/.": "script"
         },
