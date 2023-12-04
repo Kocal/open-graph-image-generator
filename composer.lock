@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33ec1fc2b29aa51c46615c689b44aec8",
+    "content-hash": "bdfa42a2fb1b73934346ddef714333c6",
     "packages": [
         {
             "name": "composer/semver",
@@ -3548,16 +3548,16 @@
         },
         {
             "name": "symfony/panther",
-            "version": "dev-main",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/panther.git",
-                "reference": "077a68c4b0939892a4cbe787e399a7cf372ae9c4"
+                "reference": "ef9a6f2393ac9679af03a93d3f508e4aa65c15b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/panther/zipball/077a68c4b0939892a4cbe787e399a7cf372ae9c4",
-                "reference": "077a68c4b0939892a4cbe787e399a7cf372ae9c4",
+                "url": "https://api.github.com/repos/symfony/panther/zipball/ef9a6f2393ac9679af03a93d3f508e4aa65c15b5",
+                "reference": "ef9a6f2393ac9679af03a93d3f508e4aa65c15b5",
                 "shasum": ""
             },
             "require": {
@@ -3579,7 +3579,6 @@
                 "symfony/mime": "^5.3 || ^6.0 || ^7.0",
                 "symfony/phpunit-bridge": "^5.3 || ^6.0 || ^7.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3618,7 +3617,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/panther/issues",
-                "source": "https://github.com/symfony/panther/tree/main"
+                "source": "https://github.com/symfony/panther/tree/v2.1.1"
             },
             "funding": [
                 {
@@ -3634,7 +3633,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-31T15:23:24+00:00"
+            "time": "2023-12-03T22:17:31+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -6202,9 +6201,7 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": {
-        "symfony/panther": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
