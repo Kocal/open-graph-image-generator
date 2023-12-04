@@ -45,7 +45,6 @@ class ImageController extends AbstractController
             $renderingUrl,
             $openGraphImage->width,
             $openGraphImage->height,
-            $openGraphImage->backgroundColor
         );
 
         return $this->redirect($pageScreenshotUrl, 301)

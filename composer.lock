@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17eeba668f72791783fe9bb0d814beeb",
+    "content-hash": "33ec1fc2b29aa51c46615c689b44aec8",
     "packages": [
         {
             "name": "composer/semver",
@@ -5556,55 +5556,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "dbrekelmans/bdi",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dbrekelmans/bdi.git",
-                "reference": "e235f7d59ba7113ebb784628614bd768e4660764"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dbrekelmans/bdi/zipball/e235f7d59ba7113ebb784628614bd768e4660764",
-                "reference": "e235f7d59ba7113ebb784628614bd768e4660764",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-zip": "*",
-                "ext-zlib": "*",
-                "php": "^7.4|^8.0"
-            },
-            "bin": [
-                "bdi",
-                "bdi.phar"
-            ],
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniël Brekelmans",
-                    "homepage": "https://github.com/dbrekelmans"
-                },
-                {
-                    "name": "Contributors",
-                    "homepage": "https://github.com/dbrekelmans/bdi/graphs/contributors"
-                }
-            ],
-            "description": "PHAR distribution of dbrekelmans/browser-driver-installer.",
-            "homepage": "https://github.com/dbrekelmans/bdi",
-            "keywords": [
-                "browser-driver-installer"
-            ],
-            "support": {
-                "source": "https://github.com/dbrekelmans/bdi/tree/1.1.0"
-            },
-            "time": "2023-10-04T13:36:08+00:00"
-        },
         {
             "name": "doctrine/inflector",
             "version": "2.0.8",
