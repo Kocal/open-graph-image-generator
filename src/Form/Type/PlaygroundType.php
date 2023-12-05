@@ -15,10 +15,11 @@ final class PlaygroundType extends AbstractType
     {
         $builder
             ->add('url', TextType::class, [
+                'required' => true,
                 'label' => 'Page URL',
-                'required' => false,
             ])
             ->add('format', ChoiceType::class, [
+                'required' => true,
                 'label' => 'Format',
                 'empty_data' => 'image',
                 'choices' => [
