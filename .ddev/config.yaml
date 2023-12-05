@@ -1,18 +1,21 @@
 name: og-image-generator
-timezone: UTC
 type: php
 docroot: public
-upload_dirs:
-  - var/storage/og_images
 php_version: "8.3"
 webserver_type: nginx-fpm
 xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
+database:
+    type: mariadb
+    version: "10.4"
+upload_dirs:
+    - var/storage/og_images
+omit_containers: [db]
 use_dns_when_possible: true
+timezone: UTC
 composer_version: "2"
 web_environment: []
-omit_containers: [db]
 
 # Key features of DDEV's config.yaml:
 
