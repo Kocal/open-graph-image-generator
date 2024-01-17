@@ -22,7 +22,6 @@
         "symfony/form": "7.0.*",
         "symfony/framework-bundle": "7.0.*",
         "symfony/http-client": "7.0.*",
-        "symfony/panther": "^2.1",
         "symfony/property-access": "7.0.*",
         "symfony/property-info": "7.0.*",
         "symfony/runtime": "7.0.*",
