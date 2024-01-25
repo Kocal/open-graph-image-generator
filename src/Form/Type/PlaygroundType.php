@@ -24,7 +24,6 @@ final class PlaygroundType extends AbstractType
                 'empty_data' => 'image',
                 'choices' => [
                     'Image' => 'image',
-                    'HTML' => 'html',
                 ],
             ])
         ;
