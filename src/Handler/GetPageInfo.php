@@ -3,14 +3,12 @@
 namespace App\Handler;
 
 use App\Dto\PageInfo;
-use App\Panther;
-use Facebook\WebDriver\WebDriverBy;
 use League\Uri\Uri;
-use Psr\Cache\CacheItemInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final readonly class GetPageInfo
+final readonly class GetPageInfo implements GetPageInfoInterface
 {
     /**
      * @param list<string> $allowedDomains
@@ -18,82 +16,45 @@ final readonly class GetPageInfo
     public function __construct(
         #[Autowire(env: 'csv:APP_OPENGRAPH_IMAGE_GENERATION_ALLOWED_DOMAINS')]
         private array $allowedDomains,
-        private CacheInterface $cache,
-        private Panther $panther,
+        private HttpClientInterface $httpClient,
     ) {
     }
 
     public function __invoke(string $pageUrl): PageInfo
     {
-        $domain = Uri::new($pageUrl)->getHost();
-        if (! in_array($domain, $this->allowedDomains)) {
+        $pageUrl = Uri::new($pageUrl);
+        if (! in_array($pageUrl->getHost(), $this->allowedDomains)) {
             throw new \InvalidArgumentException('Invalid domain.');
         }
 
-        $pageInfo = $this->cache->get(
-            key: hash('xxh128', $pageUrl),
-            callback: function (CacheItemInterface $cacheItem) use ($pageUrl) {
-                $cacheItem->expiresAfter(60 * 60 * 24 * 7);
-                return $this->doInvoke($pageUrl);
-            },
-        );
+        $request = $this->httpClient->request('GET', $pageUrl->toString());
 
-        return new PageInfo(
-            url: $pageUrl,
-            title: $pageInfo['title'],
-            description: $pageInfo['description'],
-            publishedAt: $pageInfo['datePublished'],
-            siteIconUrl: $pageInfo['siteIconUrl'],
-            siteName: $pageInfo['siteName'],
-        );
-    }
-
-    /**
-     * @return array{url: string, title: string, description: string, siteIconUrl: string, siteName: string, datePublished: \DateTimeImmutable|null}
-     */
-    private function doInvoke(string $pageUrl): array
-    {
-        $client = $this->panther->getClient();
-        $client->request('GET', $pageUrl);
-
-        $title = $client
-            ->findElement(WebDriverBy::cssSelector('meta[property="og:title"]'))
-            ->getAttribute('content')
-        ?? throw new \RuntimeException('Title not found.');
-
-        $description = $client
-            ->findElement(WebDriverBy::cssSelector('meta[property="og:description"]'))
-            ->getAttribute('content')
-        ?? throw new \RuntimeException('Description not found.');
-
-        $siteIconUrl = Uri::fromBaseUri(
-            uri: $client
-                ->findElement(WebDriverBy::cssSelector('link[rel="apple-touch-icon"]'))
-                ->getAttribute('href')
-            ?? throw new \RuntimeException('Site icon not found.'),
-            baseUri: $pageUrl,
-        );
+        $crawler = new Crawler($request->getContent());
 
         $datePublished = null;
-        foreach ($client->findElements(WebDriverBy::cssSelector('script[type="application/ld+json"]')) as $element) {
-            $jsonLd = json_decode($element->getDomProperty('textContent'), true, flags: JSON_THROW_ON_ERROR);
+        foreach ($crawler->filter('script[type="application/ld+json"]') as $node) {
+            $jsonLd = json_decode($node->textContent, true, flags: JSON_THROW_ON_ERROR);
             if (is_array($jsonLd) && is_string($jsonLd['datePublished'] ?? null)) {
                 $datePublished = new \DateTimeImmutable($jsonLd['datePublished']);
                 break;
             }
         }
 
-        try {
-            return [
-                'url' => $pageUrl,
-                'title' => $title,
-                'description' => $description,
-                'siteIconUrl' => $siteIconUrl->toString(),
-                'siteName' => Uri::new($pageUrl)->getHost() ?? throw new \RuntimeException('Site name not found.'),
-                'datePublished' => $datePublished,
-            ];
-        } finally {
-            $client->quit();
-        }
+        return new PageInfo(
+            url: $pageUrl->toString(),
+            title: $crawler->filter('meta[property="og:title"]')->attr('content')
+                ?? $crawler->filter('title')->text(),
+            description: $crawler->filter('meta[property="og:description"]')->attr('content')
+                ?? $crawler->filter('meta[name="description"]')->attr('content')
+                ?? throw new \InvalidArgumentException('Description not found.'),
+            publishedAt: $datePublished,
+            siteIconUrl: Uri::fromBaseUri(
+                uri: $crawler->filter('link[rel="apple-touch-icon"]')->attr('href')
+                    ?? $crawler->filter('link[rel="icon"]')->attr('href')
+                    ?? throw new \InvalidArgumentException('Site icon not found.'),
+                baseUri: $pageUrl,
+            ),
+            siteName: Uri::new($pageUrl)->getHost() ?? throw new \InvalidArgumentException('Site name not found.'),
+        );
     }
 }

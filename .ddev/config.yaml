@@ -10,7 +10,7 @@ database:
     type: mariadb
     version: "10.4"
 upload_dirs:
-    - var/storage/og_images
+    - ../var/storage/og_images
 omit_containers: [db]
 use_dns_when_possible: true
 timezone: UTC

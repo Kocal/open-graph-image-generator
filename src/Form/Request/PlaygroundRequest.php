@@ -11,7 +11,7 @@ final class PlaygroundRequest
     public string|null $url = null;
 
     #[Assert\NotBlank]
-    #[Assert\Choice(choices: ['image', 'html'])]
+    #[Assert\Choice(choices: ['image'])]
     public string $format = 'image';
 
     /**
