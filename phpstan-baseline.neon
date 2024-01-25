@@ -1,6 +1,2 @@
 parameters:
-	ignoreErrors:
-		-
-			message: "#^Call to an undefined method Facebook\\\\WebDriver\\\\WebDriverElement\\:\\:getDomProperty\\(\\)\\.$#"
-			count: 1
-			path: src/Handler/GetPageInfo.php
+	ignoreErrors: []

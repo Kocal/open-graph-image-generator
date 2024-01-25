@@ -42,14 +42,19 @@ final readonly class GetPageInfo implements GetPageInfoInterface
 
         return new PageInfo(
             url: $pageUrl->toString(),
-            title: $crawler->filter('meta[property="og:title"]')->attr('content'),
-            description: $crawler->filter('meta[property="og:description"]')->attr('content'),
+            title: $crawler->filter('meta[property="og:title"]')->attr('content')
+                ?? $crawler->filter('title')->text(),
+            description: $crawler->filter('meta[property="og:description"]')->attr('content')
+                ?? $crawler->filter('meta[name="description"]')->attr('content')
+                ?? throw new \InvalidArgumentException('Description not found.'),
             publishedAt: $datePublished,
             siteIconUrl: Uri::fromBaseUri(
-                uri: $crawler->filter('link[rel="apple-touch-icon"]')->attr('href'),
+                uri: $crawler->filter('link[rel="apple-touch-icon"]')->attr('href')
+                    ?? $crawler->filter('link[rel="icon"]')->attr('href')
+                    ?? throw new \InvalidArgumentException('Site icon not found.'),
                 baseUri: $pageUrl,
             ),
-            siteName: Uri::new($pageUrl)->getHost(),
+            siteName: Uri::new($pageUrl)->getHost() ?? throw new \InvalidArgumentException('Site name not found.'),
         );
     }
 }

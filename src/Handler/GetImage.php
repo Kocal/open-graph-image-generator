@@ -32,7 +32,7 @@ final readonly class GetImage
             metadata: $imageMetadata,
         );
 
-        if (!$this->imagesStorage->fileExists($image->filename)) {
+        if (! $this->imagesStorage->fileExists($image->filename)) {
             $this->imagesStorage->write($image->filename, ($this->generateImage)($image, $pageInfo));
         }
 

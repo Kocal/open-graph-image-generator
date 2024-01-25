@@ -60,7 +60,7 @@ final readonly class GenerateImage
                 ->text(
                     $line,
                     self::IMAGE_PADDING,
-                    $titleHeight = (self::IMAGE_PADDING + $i * $fontTitle->size() * $fontTitle->lineHeight()),
+                    $titleHeight = (int) (self::IMAGE_PADDING + $i * $fontTitle->size() * $fontTitle->lineHeight()),
                     $fontTitle,
                 );
         }
@@ -71,7 +71,7 @@ final readonly class GenerateImage
                 ->text(
                     $line,
                     self::IMAGE_PADDING,
-                    $titleHeight + 32 + ($i * $fontSubTitle->size() * $fontSubTitle->lineHeight()),
+                    (int) ($titleHeight + 32 + ($i * $fontSubTitle->size() * $fontSubTitle->lineHeight())),
                     $fontSubTitle,
                 );
         }
@@ -85,10 +85,11 @@ final readonly class GenerateImage
             ->read($response->getContent())
             ->scaleDown(self::SITE_ICON_SIZE, self::SITE_ICON_SIZE);
 
-        $siteIconImage
-            ->core()
-            ->native()
-            ->roundCornersImage($siteIconImage->width(), $siteIconImage->height());
+        if (! ($siteIconImageNative = $siteIconImage->core()->native()) instanceof \Imagick) {
+            throw new \RuntimeException('Expected Imagick instance.');
+        }
+
+        $siteIconImageNative->roundCornersImage($siteIconImage->width(), $siteIconImage->height());
 
         $image->place(
             $siteIconImage,
@@ -114,6 +115,10 @@ final readonly class GenerateImage
 
     private function drawDate(ImageManager $imageManager, ImageInterface $interventionImage, PageInfo $pageInfo): void
     {
+        if (! $pageInfo->publishedAt) {
+            return;
+        }
+
         $interventionImage
             ->text(
                 $pageInfo->publishedAt->format('M d, Y'),
@@ -139,7 +144,7 @@ final readonly class GenerateImage
     {
         $imagick = new \Imagick();
         $imagickDraw = new \ImagickDraw();
-        $imagickDraw->setFont($font->filename());
+        $imagickDraw->setFont($font->filename() ?? throw new \RuntimeException('Expected font filename.'));
         $imagickDraw->setFontSize($font->size());
 
         $line = [];
