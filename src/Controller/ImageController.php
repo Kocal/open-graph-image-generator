@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
-use App\Dto\OpenGraphImage;
-use App\Handler\GetPageScreenshotUrl;
+use App\Dto\ImageMetadata;
+use App\Handler\GetImage;
+use App\Handler\GetImagePublicUrl;
+use App\Handler\GetPageInfoInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ImageController extends AbstractController
 {
@@ -17,37 +18,23 @@ class ImageController extends AbstractController
         '/image.{_format}',
         name: 'app_image',
         defaults: [
-            '_format' => 'html|image',
+            '_format' => 'image',
         ],
         format: 'image'
     )]
     public function __invoke(
+        #[MapQueryParameter(name: 'url')]
+        string $pageUrl,
         #[MapQueryString]
-        OpenGraphImage $openGraphImage,
-        GetPageScreenshotUrl             $getPageScreenshotUrl,
-        Request $request,
+        ImageMetadata $imageMetadata,
+        GetPageInfoInterface $getPageInfo,
+        GetImage $getImage,
+        GetImagePublicUrl $getImagePublicUrl,
     ): Response {
-        $isHtml = $request->getRequestFormat() === 'html';
+        $pageInfo = $getPageInfo($pageUrl);
+        $image = $getImage($imageMetadata, $pageInfo);
 
-        $renderingUrl = $this->generateUrl(
-            'app_render',
-            [
-                'enableProfiler' => $isHtml,
-            ] + $openGraphImage->toArray(),
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
-
-        if ($isHtml) {
-            return $this->redirect($renderingUrl);
-        }
-
-        $pageScreenshotUrl = ($getPageScreenshotUrl)(
-            $renderingUrl,
-            $openGraphImage->width,
-            $openGraphImage->height,
-        );
-
-        return $this->redirect($pageScreenshotUrl, 301)
+        return $this->redirect($getImagePublicUrl($image), 301)
             ->setPublic()
             ->setMaxAge(3600);
     }
