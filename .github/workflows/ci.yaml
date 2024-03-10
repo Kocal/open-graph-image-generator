@@ -21,14 +21,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup DDEV
-        uses: ddev/github-action-setup-ddev@v1
+      - name: Setup PHP Action
+        uses: shivammathur/setup-php@2.30.0
+        with:
+          tools: symfony-cli
 
       - name: Install PHP dependencies
-        run: ddev composer install --no-ansi
+        run: symfony composer install --no-ansi
 
       - name: Check code style
-        run: ddev composer check-cs -- --no-ansi
+        run: symfony composer check-cs -- --no-ansi
 
       - name: Analyze source code
-        run: ddev composer phpstan -- --no-ansi
+        run: symfony composer phpstan -- --no-ansi
