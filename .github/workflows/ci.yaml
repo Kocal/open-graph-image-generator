@@ -23,6 +23,8 @@ jobs:
 
       - name: Setup PHP Action
         uses: shivammathur/setup-php@2.30.0
+        with:
+          tools: symfony-cli
 
       - name: Install PHP dependencies
         run: symfony composer install --no-ansi
