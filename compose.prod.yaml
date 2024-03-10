@@ -17,3 +17,4 @@ services:
       target: frankenphp_prod
     environment:
       APP_SECRET: ${APP_SECRET}
+      SERVER_NAME: ${SERVER_NAME}
