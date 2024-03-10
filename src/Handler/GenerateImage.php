@@ -14,9 +14,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final readonly class GenerateImage
 {
-    private const int IMAGE_PADDING = 56;
+    private const IMAGE_PADDING = 56;
 
-    private const int SITE_ICON_SIZE = 92;
+    private const SITE_ICON_SIZE = 92;
 
     public function __construct(
         private HttpClientInterface $httpClient,
