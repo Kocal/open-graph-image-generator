@@ -18,3 +18,5 @@ services:
     environment:
       APP_SECRET: ${APP_SECRET}
       SERVER_NAME: ${SERVER_NAME}
+    volumes:
+      - ./var/storage:/app/var/storage:rw
