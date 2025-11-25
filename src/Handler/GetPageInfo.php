@@ -3,6 +3,8 @@
 namespace App\Handler;
 
 use App\Dto\PageInfo;
+use App\Exception\PageNotFoundException;
+use App\Exception\UnallowedHttpDomainException;
 use League\Uri\Uri;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DomCrawler\Crawler;
@@ -24,10 +26,13 @@ final readonly class GetPageInfo implements GetPageInfoInterface
     {
         $pageUrl = Uri::new($pageUrl);
         if (! in_array($pageUrl->getHost(), $this->allowedDomains)) {
-            throw new \InvalidArgumentException('Invalid domain.');
+            throw new UnallowedHttpDomainException($pageUrl->getHost());
         }
 
         $request = $this->httpClient->request('GET', $pageUrl->toString());
+        if ($request->getStatusCode() === 404) {
+            throw new PageNotFoundException($pageUrl);
+        }
 
         $crawler = new Crawler($request->getContent());
 
