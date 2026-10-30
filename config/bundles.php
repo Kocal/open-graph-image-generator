@@ -20,7 +20,4 @@ return [
         'dev' => true,
         'test' => true,
     ],
-    Snc\RedisBundle\SncRedisBundle::class => [
-        'all' => true,
-    ],
 ];

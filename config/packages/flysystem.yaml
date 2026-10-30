@@ -2,7 +2,6 @@
 flysystem:
     storages:
         storage.og_image:
-            adapter: 'local'
-            options:
+            local:
                 directory: '%kernel.project_dir%/var/storage/og_images'
             public_url: '/og_images'

@@ -5,7 +5,6 @@ This project is a simple Open Graph image generator, it allows you to generate O
 ## Requirements
 
 - [Symfony CLI](https://symfony.com/download)
-- Docker and Docker Compose
 - PHP 8.5
 
 ## Installation
@@ -30,7 +29,6 @@ $ symfony composer install
 Run the project:
 
 ```shell
-$ docker compose up -d
 $ symfony serve
 ```
 

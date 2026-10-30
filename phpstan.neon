@@ -9,3 +9,7 @@ parameters:
         - public/
         - src/
         #- tests/
+    excludePaths:
+        - config/reference.php
+    scanFiles:
+        - config/reference.php
