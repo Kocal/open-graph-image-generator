@@ -21,7 +21,7 @@ final readonly class GenerateImage
     public function __construct(
         private HttpClientInterface $httpClient,
         #[Autowire(param: 'kernel.project_dir')]
-        private string              $projectDir,
+        private string $projectDir,
     ) {
     }
 

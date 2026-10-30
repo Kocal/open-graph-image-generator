@@ -12,7 +12,7 @@
 
 ###> symfony/asset-mapper ###
 /public/assets/
-/assets/vendor
+/assets/vendor/
 ###< symfony/asset-mapper ###
 
 ###> symfony/panther ###
