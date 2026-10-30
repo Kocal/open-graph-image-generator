@@ -4,7 +4,7 @@
     "minimum-stability": "beta",
     "prefer-stable": true,
     "require": {
-        "php": "~8.2.0",
+        "php": "~8.5.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-imagick": "*",
@@ -51,7 +51,7 @@
     },
     "config": {
         "platform": {
-            "php": "8.2"
+            "php": "8.5"
         },
         "allow-plugins": {
             "php-http/discovery": true,

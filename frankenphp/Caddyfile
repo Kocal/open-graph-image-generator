@@ -1,32 +1,27 @@
 {
+	skip_install_trust
+
 	{$CADDY_GLOBAL_OPTIONS}
 
 	frankenphp {
 		{$FRANKENPHP_CONFIG}
 	}
-
-	# https://caddyserver.com/docs/caddyfile/directives#sorting-algorithm
-	#order mercure after encode
-	#order vulcain after reverse_proxy
-	order php_server before file_server
 }
 
 {$CADDY_EXTRA_CONFIG}
 
 {$SERVER_NAME:localhost} {
 	log {
+		{$CADDY_SERVER_LOG_OPTIONS}
 		# Redact the authorization query parameter that can be set by Mercure
 		format filter {
-			wrap console
-			fields {
-				uri query {
-					replace authorization REDACTED
-				}
+			request>uri query {
+				replace authorization REDACTED
 			}
 		}
 	}
 
-	root * /app/public
+	root /app/public
 	encode zstd br gzip
 
 	#mercure {
@@ -51,5 +46,24 @@
 	# Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
 	header ?Permissions-Policy "browsing-topics=()"
 
-	php_server
+	@phpRoute {
+		not path /.well-known/mercure*
+		not file {path}
+	}
+	rewrite @phpRoute index.php
+
+	@frontController path index.php
+	php @frontController {
+		{$FRANKENPHP_SITE_CONFIG}
+
+		worker {
+			file ./public/index.php
+			env APP_RUNTIME Runtime\FrankenPhpSymfony\Runtime
+			{$FRANKENPHP_WORKER_CONFIG}
+		}
+	}
+
+	file_server {
+		hide *.php
+	}
 }
