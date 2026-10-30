@@ -6,7 +6,7 @@ This project is a simple Open Graph image generator, it allows you to generate O
 
 - [Symfony CLI](https://symfony.com/download)
 - Docker and Docker Compose
-- PHP 8.3
+- PHP 8.5
 
 ## Installation
 
