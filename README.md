@@ -37,5 +37,6 @@ $ symfony serve
 You can use this project programmatically by sending a `GET` request to the `/generate` endpoint with the following parameters:
 - `format` (required): The image format, can be `html` or `image`
 - `url` (required): The URL to generate the Open Graph image
+- `v` (optional, 1 to 32 characters among `A-Z a-z 0-9 . _ -`): a version chosen by the page, for example a short hash of its title and description. It becomes part of the image filename, so changing it produces a new image at a new URL: no cache to purge, neither here, nor on the CDN, nor on the social networks that already fetched the previous card
 
 Example: https://127.0.0.1:8000/generate?url=https://hugo.alliau.me/posts/2023-10-21-blackfire-and-symfony-cli.html&format=image

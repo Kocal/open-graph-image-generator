@@ -29,6 +29,10 @@ class ImageController extends AbstractController
     public function __invoke(
         #[MapQueryParameter(name: 'url')]
         string $pageUrl,
+        #[MapQueryParameter(name: 'v', filter: \FILTER_VALIDATE_REGEXP, options: [
+            'regexp' => '/^[A-Za-z0-9._-]{1,32}$/',
+        ])]
+        ?string $version,
         #[MapQueryString]
         ImageMetadata $imageMetadata,
         GetPageInfoInterface $getPageInfo,
@@ -36,14 +40,14 @@ class ImageController extends AbstractController
         GetImagePublicUrl $getImagePublicUrl,
     ): Response {
         try {
-            $pageInfo = $getPageInfo($pageUrl);
+            $pageInfo = $getPageInfo($pageUrl, $version);
         } catch (UnallowedHttpDomainException $e) {
             throw new BadRequestException($e->getMessage());
         } catch (PageNotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage());
         }
 
-        $image = $getImage($imageMetadata, $pageInfo);
+        $image = $getImage($imageMetadata, $pageInfo, $version);
 
         return $this->redirect($getImagePublicUrl($image), 301)
             ->setPublic()

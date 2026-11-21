@@ -22,7 +22,7 @@ final readonly class GetPageInfo implements GetPageInfoInterface
     ) {
     }
 
-    public function __invoke(string $pageUrl): PageInfo
+    public function __invoke(string $pageUrl, ?string $version = null): PageInfo
     {
         $pageUrl = Uri::new($pageUrl);
         if (! in_array($pageUrl->getHost(), $this->allowedDomains)) {
