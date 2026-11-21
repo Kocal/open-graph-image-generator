@@ -18,14 +18,14 @@ final readonly class GetPageInfoCached implements GetPageInfoInterface
     ) {
     }
 
-    public function __invoke(string $pageUrl): PageInfo
+    public function __invoke(string $pageUrl, ?string $version = null): PageInfo
     {
         return $this->cache->get(
-            key: hash('xxh128', $pageUrl),
-            callback: function (CacheItemInterface $cacheItem) use ($pageUrl) {
+            key: hash('xxh128', $pageUrl . "\0" . ($version ?? '')),
+            callback: function (CacheItemInterface $cacheItem) use ($pageUrl, $version) {
                 $cacheItem->expiresAfter(60 * 60 * 24 * 7);
 
-                return ($this->inner)($pageUrl);
+                return ($this->inner)($pageUrl, $version);
             },
         );
     }
